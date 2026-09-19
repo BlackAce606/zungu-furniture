@@ -3,6 +3,13 @@ import { useScroll, useMotionValueEvent } from 'framer-motion';
 import Chatbot from './Chatbot.jsx';
 import { SITE_I18N, getStoredLang } from './i18n.js';
 
+// Vite's `base` config (set for GitHub Pages' /zungu-furniture/ subpath)
+// only rewrites asset URLs that go through its build pipeline — plain
+// string paths built at runtime, like the ones below, need this prefix
+// by hand or they resolve against the domain root instead of the deployed
+// subpath. BASE_URL always has a trailing slash already.
+const BASE = import.meta.env.BASE_URL;
+
 // Desktop gets the newer, higher-quality landscape clip; mobile/tablet gets
 // the original portrait clip — same breakpoint (900px) already used for the
 // nav's mobile menu elsewhere in this file, so "tablet" is treated the same
@@ -11,7 +18,7 @@ const HERO_SETS = {
   landscape: { dir: 'hero-frames-landscape', count: 120 },
   portrait: { dir: 'hero-frames-portrait', count: 119 },
 };
-const heroFramePath = (mode, i) => `/${HERO_SETS[mode].dir}/frame_${String(i + 1).padStart(3, '0')}.jpg`;
+const heroFramePath = (mode, i) => `${BASE}${HERO_SETS[mode].dir}/frame_${String(i + 1).padStart(3, '0')}.jpg`;
 const pickHeroMode = () => (window.innerWidth <= 900 ? 'portrait' : 'landscape');
 
 function Nav({ lang, onToggleLang }) {
@@ -30,7 +37,7 @@ function Nav({ lang, onToggleLang }) {
   return (
     <header className={`nav${scrolled ? ' scrolled' : ''}`}>
       <a href="#" className="logo">
-        <img src="/logo.png" alt="Zungu Furniture & Interior Design" />
+        <img src={`${BASE}logo.png`} alt="Zungu Furniture & Interior Design" />
         <span className="logo-word">ZUNGU</span>
       </a>
       <div className="nav-right">
@@ -235,8 +242,8 @@ function Services({ lang }) {
 }
 
 const WORK_COUNT = 9;
-const workVideoPath = (i) => `/work/work-${String(i + 1).padStart(2, '0')}.mp4`;
-const workPosterPath = (i) => `/work/work-${String(i + 1).padStart(2, '0')}.jpg`;
+const workVideoPath = (i) => `${BASE}work/work-${String(i + 1).padStart(2, '0')}.mp4`;
+const workPosterPath = (i) => `${BASE}work/work-${String(i + 1).padStart(2, '0')}.jpg`;
 
 // Autoplay (muted) only while its card is actually on screen — same pattern
 // already proven for video cards on the Minimax site — so nine videos don't
@@ -486,7 +493,7 @@ function Footer({ lang }) {
     <footer className="footer">
       <div className="footer-inner">
         <span className="footer-logo">
-          <img src="/logo.png" alt="Zungu Furniture & Interior Design" />
+          <img src={`${BASE}logo.png`} alt="Zungu Furniture & Interior Design" />
           ZUNGU
         </span>
         <p className="footer-tagline">{t.tagline}</p>
