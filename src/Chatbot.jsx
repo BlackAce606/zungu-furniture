@@ -59,7 +59,7 @@ export default function Chatbot({ lang }) {
     });
   };
 
-  const quickKeys = ['make', 'ship', 'custom', 'human'];
+  const quickKeys = ['services', 'location', 'booking', 'human'];
 
   return (
     <div className="chat-widget">
